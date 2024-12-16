@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
  * @author Theo
  * @since 2024/12/14
  */
+
+// TODO: 인코드도 Class 화 생각하기
 public class EncodedNewQRCode {
     private final byte[] data;
 

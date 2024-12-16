@@ -43,7 +43,7 @@ public class NewQRCode {
         NewQRCode newQRCode = new NewQRCode()
                 .addModule(new NewQRCodeColorModule("RED"));
         newQRCode.initialize();
-        newQRCode.setData("A");
+        // newQRCode.setData("A");
 
         EncodedNewQRCode encodedNewQRCode = newQRCode.encode();
     }

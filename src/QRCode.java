@@ -4,9 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
-import java.util.stream.Stream;
 import javax.imageio.ImageIO;
 
+
+// TODO: 여기 있는 함수를 Class 화 할 수 있는지 생각하기
 public class QRCode {
     private final String data;
     private final int size;
@@ -16,14 +17,15 @@ public class QRCode {
         this.size = size;
     }
 
-    record QRCodeImage(Byte[] bufferedImage) {
+    record QRCodeImage(Byte[] buffer) {
         public ByteBuffer byteBuffer() {
-            return /* convert bufferedImage to ByteBuffer */;
+            /*return  convert bufferedImage to ByteBuffer */;
+            return buffer
         }
     }
 
     // break changes
-    protected QRCodeImage generateQRCode(adfadsfasdfasd, da fads fsa,df sda fsda ,sdfds) {
+    protected QRCodeImage generateQRCode() {
         int[][] qrMatrix = new int[size][size];
 
         // 1. Finder 패턴 생성
@@ -34,7 +36,7 @@ public class QRCode {
         placeData(qrMatrix, encodedData);
 
         // 3. QR 코드 이미지화
-        var bytes = createImage(qrMatrix);
+        byte[] bytes = createImage(qrMatrix);
         return new QRCodeImage(bytes);
     }
 
@@ -79,7 +81,7 @@ public class QRCode {
         }
     }
 
-    private static Byte[] createImage(int[][] matrix) {
+    private static byte createImage(int[][] matrix) {
         int size = matrix.length;
         int scale = 10;
         BufferedImage image = new BufferedImage(size * scale, size * scale, BufferedImage.TYPE_INT_RGB);
@@ -94,13 +96,11 @@ public class QRCode {
                 }
             }
         }
-        return bytes;
-
         try {
             BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream("qrcode.png"));
             ByteBuffer buffer = ByteBuffer.allocate(4);
-
             ImageIO.write(image, "png", new File("qrcode.png"));
+            return buffer.get();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
