@@ -1,14 +1,14 @@
 package module;
 
-public class ColorModule implements QRCodeModule {
-    private final String color;
+public class ColorModule implements QRModule {
+  private final int color;
 
-    public ColorModule(String color) {
-        this.color = color;
-    }
+  public ColorModule(int color) {
+      this.color = color;
+  }
 
-    @Override
-    public void applyModule(QRCode QRCode) {
-        QRCode.setColor(color);
-    }
+  @Override
+  public void applyModule(QrCode qr) {
+    qr.setColor(color);
+  }
 }
