@@ -1,8 +1,12 @@
 plugins {
     id 'java'
+    id 'maven-publish'
 }
 
 version '1.0-SNAPSHOT'
+
+sourceCompatibility = 21
+targetCompatibility = 21
 
 repositories {
     mavenCentral()
@@ -11,6 +15,24 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+wrapper {
+    gradleVersion = "9.0"
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 test {
