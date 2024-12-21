@@ -1,4 +1,4 @@
-# QR Code Library for Java
+# QR Code Library for Java T
 
 ### 프로젝트 개요
 
