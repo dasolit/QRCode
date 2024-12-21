@@ -6,7 +6,7 @@ public enum ColorList {
   BLUE(0x0000FF),
   WHITE(0xFFFFFF),
   BLACK(0x000000),
-  CUSTOM(0x324556); // 사용자가 지정한 색상
+  CUSTOM(0x324556);
 
   public final int hexValue;
 
