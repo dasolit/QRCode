@@ -16,35 +16,48 @@ import javax.imageio.ImageIO;
 
 public final class QrCode {
 
+	private String data = "";
 	private int color = 0x324556;
+	private String imageName = "qr_code_fixed";
+	private String imageFormat = "png";
 
-	private List<QRModule> moduleList =  new ArrayList<>();
+	private List<QrModule> moduleList =  new ArrayList<>();
 
+	public void setData (String data) {
+		this.data = data;
+	}
+	public String getData () {
+		return data;
+	}
 	public void setColor(int color) {
 		this.color = color;
 	}
-	public QrCode addModule(QRModule module) {
+	public void setImage(String imageName, String imageFormat) {
+		this.imageName = imageName;
+		this.imageFormat = imageFormat;
+	}
+	public QrCode addModule(QrModule module) {
 		moduleList.add(module);
 		return this;
 	}
 
 	public void initialize() throws IOException {
-		for (QRModule module : moduleList) {
+		for (QrModule module : moduleList) {
 			module.applyModule(this);
 		}
-		BufferedImage image = toImage(this, 10, 1,  0x324556);
-		// 3. 이미지 저장
-		File file = new File("qr_code_fixed.png");
+		QrCode qr = encodeText(this.data, Ecc.LOW);
+		BufferedImage image = toImage(qr, 10, 1,  this.color);
+		String pathName = imageName+"."+imageFormat;
+		File file = new File(pathName);
 		ImageIO.write(image, "png", file);
 	}
 
-	public static QrCode createQrCode(String text) {
-		return QrCode.encodeText(text, Ecc.LOW);
+	public QrCode(String data) {
+		this.data = data;
 	}
 
 	private BufferedImage toImage(QrCode qr, int scale, int border, int qrColor) {
 		Objects.requireNonNull(qr);
-		if (this.color != 0x324556) { this.color = qrColor; }
 		if (scale <= 0 || border < 0)
 			throw new IllegalArgumentException("Value out of range");
 		if (border > Integer.MAX_VALUE / 2 || qr.size + border * 2L > Integer.MAX_VALUE / scale)
@@ -54,7 +67,7 @@ public final class QrCode {
 		for (int y = 0; y < result.getHeight(); y++) {
 			for (int x = 0; x < result.getWidth(); x++) {
 				boolean color = qr.getModule(x / scale - border, y / scale - border);
-				result.setRGB(x, y, color ? this.color : 0xFFFFFF);
+				result.setRGB(x, y, color ? qrColor : 0xFFFFFF);
 			}
 		}
 		return result;
@@ -131,13 +144,13 @@ public final class QrCode {
 	
 	
 	
-	public final int version;
+	public int version;
 
-	public final int size;
+	public int size;
 	
-	public final Ecc errorCorrectionLevel;
+	public Ecc errorCorrectionLevel;
 	
-	public final int mask;
+	public int mask;
 	
 	private boolean[][] modules;
 	
