@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 public final class QrCode {
 
 	private String data = "";
-	private int color = 0x324556;
+	private int color = 0x000000;
 	private String imageName = "qr_code_fixed";
 	private String imageFormat = "png";
 
