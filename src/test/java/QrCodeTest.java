@@ -12,7 +12,7 @@ public class QrCodeTest {
 
   @Test
   public void testSetData() {
-    QrCode qrCode = new QrCode("initial");
+    QrCode qrCode = new QrCode("initial1");
     qrCode.setData("newData");
     assertEquals("newData", qrCode.getData());
   }
